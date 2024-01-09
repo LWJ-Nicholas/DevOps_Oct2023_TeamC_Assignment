@@ -1,0 +1,50 @@
+name: Pull Request 
+
+on: 
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        python-version: 3.11
+    - name: Install Libraries
+      run: |
+        pip install flake8 pytest pytest-cov
+    - name: Checkout Own Repo
+      uses: actions/checkout@v2
+      with:
+        repository: lowkh/DevOps2022Demo
+    - name: list our contents
+      run: |
+        ls
+    - name: test with pytest
+      run: |
+        pytest test.py -v -cov --junitxml=report.xml
+    - if: ${{ failure() }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: .github/ISSUE_TEMPLATE.md
+  
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
+    - name: create folder
+      run: mkdir downloads
+    
+    - name: move files
+      run: mv *.xml ./downloads
+      
+    - name: Upload document
+      uses: actions/upload-artifact@v2
+      with: 
+        name: assetDocuments
+        path: downloads
+    
