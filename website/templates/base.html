@@ -21,23 +21,16 @@
         <title>{% block title %}Template{% endblock %}</title>
         </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <div class="navbar-nav">
-                  {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" id="logut" href="/logout">Logout</a>
-                    <a class="nav-item nav-link" id="home" href="/">Home</a>
-                  {% else %}
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-                    <a class="nav-item nav-link" id="create-account" href="/create-account">Create Account</a>
-                  {% endif %}
-                </div>
-            </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <h3 style="color: #4CAF50;"class="p-3 mr-auto">TSAO Capstone Records System</h3> 
+
+          {% block nav %}
+          {% endblock %}
         </nav>
-        <h1 style="color: #4CAF50;margin-left: 150px;"class="p-3">TSAO Capstone Records System</h1> 
+
+
+        
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -61,9 +54,11 @@
         {% endwith %}
 
         <div class="container" style="max-width: 500px;">
-            {% block content %}
+            {% block forms %}
             {% endblock %}
         </div>
+        {% block content %}
+        {% endblock %}
         <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

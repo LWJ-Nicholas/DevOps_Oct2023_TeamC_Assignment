@@ -17,11 +17,11 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!',category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('auth.welcome'))
             else:
                 flash('Incorrect password, try again.',category='error')
         else:
-            flash('Email does not exist.',category='error')
+            flash('Username does not exist.',category='error')
 
     return render_template("login.html",user=current_user)
 
@@ -29,7 +29,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect('/')
 
 @auth.route('/create-account',methods=['GET','POST'])
 def createAccount():
@@ -50,11 +50,15 @@ def createAccount():
                 password, method='pbkdf2'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
 
             flash('Account created!',category='success')
 
-            return redirect(url_for('views.home'))
-
+            return redirect(url_for('auth.welcome'))
 
     return render_template("create-account.html",user=current_user)
+
+@auth.route('/welcome')
+@login_required
+def welcome():
+    return render_template("welcome.html",user=current_user)
