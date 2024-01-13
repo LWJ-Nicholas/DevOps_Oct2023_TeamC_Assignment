@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -32,9 +33,11 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     
+    #create admin account
+    with app.app_context():
+        if db.session.query(User).filter_by(username='Admin').count() < 1:
+            admin = User(username='Admin', password=generate_password_hash('password', method='pbkdf2'), isAdmin = 1)
+            db.session.add(admin)
+            db.session.commit()
+    
     return app
-
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print("Created Database!")
