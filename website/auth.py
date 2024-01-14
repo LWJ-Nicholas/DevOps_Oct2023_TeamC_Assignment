@@ -29,6 +29,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('Logged out successfully!',category='success')
     return redirect('/')
 
 @auth.route('/create-account',methods=['GET','POST'])
@@ -40,7 +41,7 @@ def createAccount():
         user = User.query.filter_by(username=username).first()
 
         if user:
-            flash('Email already exists',category='error')
+            flash('User already exists',category='error')
         elif len(username) < 2:
             flash('Username must be greater than 2 characters.',category='error')
         elif len(password) < 7:
@@ -62,3 +63,21 @@ def createAccount():
 @login_required
 def welcome():
     return render_template("welcome.html",user=current_user)
+
+# Route for the form page
+@auth.route('/form', methods=['GET', 'POST'])
+def form():
+    if request.method == 'POST':
+        # Access form data
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+
+        # Do something with the form data (you can process or store it)
+        # For example, print the data to the console
+        print(f"Name: {name}, Email: {email}, Message: {message}")
+
+        # Return a response (you can redirect or render a template)
+        return render_template('success.html', name=name)  # Render a success page with the submitted name
+
+    return render_template('CreateEntry.html')

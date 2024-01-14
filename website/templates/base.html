@@ -17,20 +17,19 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           crossorigin="anonymous"
         />
+        {% block stylesheet %}{% endblock %}
 
         <title>{% block title %}Template{% endblock %}</title>
-        </head>
-    <body>
 
+        </head>
+
+    <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
           <h3 style="color: #4CAF50;"class="p-3 mr-auto">TSAO Capstone Records System</h3> 
 
-          {% block nav %}
-          {% endblock %}
+          {% block nav %}{% endblock %}
         </nav>
 
-
-        
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -57,13 +56,10 @@
             {% block forms %}
             {% endblock %}
         </div>
+
         {% block content %}
         {% endblock %}
-        <script
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"
-      ></script>
+
       <script
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

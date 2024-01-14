@@ -4,3 +4,5 @@ pytest-cov
 Flask
 Jinja2
 passlib
+flask-login  
+flask-sqlalchemy
