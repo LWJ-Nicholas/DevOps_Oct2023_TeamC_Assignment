@@ -29,6 +29,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('Logged out successfully!',category='success')
     return redirect('/')
 
 @auth.route('/create-account',methods=['GET','POST'])
@@ -40,7 +41,7 @@ def createAccount():
         user = User.query.filter_by(username=username).first()
 
         if user:
-            flash('Email already exists',category='error')
+            flash('User already exists',category='error')
         elif len(username) < 2:
             flash('Username must be greater than 2 characters.',category='error')
         elif len(password) < 7:
