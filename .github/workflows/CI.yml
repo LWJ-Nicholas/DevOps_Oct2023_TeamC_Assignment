@@ -23,7 +23,7 @@ jobs:
     - name: Checkout Own Repo
       uses: actions/checkout@v2
       with:
-        repository: LWJ-Nicholas/DevOps_Oct2023_TeamC_Assignment
+        repository: C4RR0T02/DevOps_Oct2023_TeamC_Assignment
     - name: list our contents
       run: |
         ls
