@@ -4,6 +4,6 @@ def f():
     raise SystemExit(1)
 
 
-def test_mytest():
+def test_mytest(capsys):
     with pytest.raises(SystemExit):
         return f()
