@@ -32,7 +32,7 @@ jobs:
         ls
     - name: test with pytest
       run: |
-        python -m pytest --junitxml=./test.xml
+        python -m pytest --junitxml=test.xml
 
     - if: ${{ failure() }}
       name: Create Issue on Failed workflow
