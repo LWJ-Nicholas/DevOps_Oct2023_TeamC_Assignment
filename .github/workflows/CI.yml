@@ -18,7 +18,7 @@ jobs:
         python-version: 3.11
 
     - name: Checkout Own Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: C4RR0T02/DevOps_Oct2023_TeamC_Assignment
 
