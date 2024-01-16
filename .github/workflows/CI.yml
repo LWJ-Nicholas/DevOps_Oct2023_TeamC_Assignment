@@ -24,7 +24,7 @@ jobs:
         ls
     - name: test with pytest
       run: |
-        pytest test.py -v -cov --junitxml=report.xml
+        python -m pytest --junitxml=test.xml
 
     - if: ${{ failure() }}
       name: Create Issue on Failed workflow

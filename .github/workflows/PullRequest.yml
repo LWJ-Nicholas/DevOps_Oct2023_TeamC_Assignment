@@ -24,7 +24,7 @@ jobs:
         ls
     - name: test with pytest
       run: |
-        pytest test.py -v -cov --junitxml=report.xml
+        python -m pytest --junitxml=test.xml
     - if: ${{ failure() }}
       uses: JasonEtco/create-an-issue@v2
       env:
