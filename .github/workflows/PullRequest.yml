@@ -8,23 +8,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         python-version: 3.11
+    - name: Checkout Own Repo
+      uses: actions/checkout@v4
+      with:
+        repository: LWJ-Nicholas/DevOps_Oct2023_TeamC_Assignment
     - name: Install Libraries
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Checkout Own Repo
-      uses: actions/checkout@v2
-      with:
-        repository: LWJ-Nicholas/DevOps_Oct2023_TeamC_Assignment
+        python -m  pip install -r requirements.txt
     - name: list our contents
       run: |
         ls
     - name: test with pytest
       run: |
-        pytest test.py -v -cov --junitxml=report.xml
+        python -m pytest --junitxml=test.xml
     - if: ${{ failure() }}
       uses: JasonEtco/create-an-issue@v2
       env:
