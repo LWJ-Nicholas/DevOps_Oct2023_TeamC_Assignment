@@ -22,9 +22,10 @@ jobs:
     - name: list our contents
       run: |
         ls
+    
     - name: Lint Files
       run: |
-        flake8
+        python -m flake8
 
     - name: test with pytest
       run: |
