@@ -25,28 +25,12 @@ jobs:
     - name: Lint Files
       run: |
         flake8
-        
+
     - name: test with pytest
       run: |
         cd test_files
         python -m pytest --junitxml=test.xml
         cd ..
-
-    - if: ${{ failure() }}
-      name: Create Issue on Failed workflow
-      uses: dacbd/create-issue-action@main
-      with:
-        token: ${{ github.token }}
-        title: Action workflow failed.
-        body: |
-          ### Context
-          [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
-          Workflow name - `${{ github.workflow }}`
-          Job -           `${{ github.job }}`
-          status -        `${{ job.status }}`
-          assignees: LWJ-Nicholas
-          approvers: HanisahMusrin
 
  #     uses: JasonEtco/create-an-issue@v2
  #     env:
