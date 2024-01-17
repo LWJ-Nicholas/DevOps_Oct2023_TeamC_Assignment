@@ -1,0 +1,10 @@
+[flake8]
+ignore =
+    E501
+    E722
+exclude =
+    .git,
+    setup.py,
+    __pycache__,
+    __init__,
+    env,

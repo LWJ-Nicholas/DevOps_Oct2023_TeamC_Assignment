@@ -1,6 +1,5 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Replace with your database URI
@@ -17,7 +16,6 @@ class User(db.Model):
     approved_by = db.Column(db.String(50), nullable=True)
     date_approved = db.Column(db.DateTime, nullable=True)
 
-
     def __repr__(self):
         return f'<User {self.name}>'
 
@@ -32,7 +30,7 @@ def addUser():
         date_approved = None
         approved_by = None
 
-        new_user = User(name=name, password=password , role=role, date_approved=date_approved, approved_by=approved_by, failed_login_attempts=failed_login_attempts)
+        new_user = User(name=name, password=password, role=role, date_approved=date_approved, approved_by=approved_by, failed_login_attempts=failed_login_attempts)
 
         try:
             db.session.add(new_user)
@@ -73,7 +71,8 @@ def updateUser(id):
 
     else:
         return render_template('updateUser.html', user=user)
-    
+
+
 @app.route('/approve/user/<int:id>')
 def approveUser(id):
     user = User.query.get_or_404(id)
@@ -83,9 +82,11 @@ def approveUser(id):
         return redirect('/')
     except:
         return 'There was an issue approving your user'
-    
+
+
 @app.route('/assign/admin/<int:id>')
 def assignUser(id):
+
     user = User.query.get_or_404(id)
     user.role = 'admin'
     try:
@@ -93,7 +94,8 @@ def assignUser(id):
         return redirect('/')
     except:
         return 'There was an issue assigning your user'
-    
+
+
 @app.route('/unassign/admin/<int:id>')
 def unassignUser(id):
     user = User.query.get_or_404(id)
@@ -103,6 +105,7 @@ def unassignUser(id):
         return redirect('/')
     except:
         return 'There was an issue unassigning your user'
+
 
 # Create the database tables
 db.create_all()
