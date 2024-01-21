@@ -81,3 +81,8 @@ def form():
         return render_template('success.html', name=name)  # Render a success page with the submitted name
 
     return render_template('CreateEntry.html')
+
+@auth.route('/manage_account')
+@login_required
+def manage_account():
+    return render_template("manage_account.html",user=current_user)

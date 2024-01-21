@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Account{% endblock %}
+
+{% block content %}
+    <br/>
+    <h1 class="text-center fw-bold" style="font-size: 60px;">Account Management</h1>
+    <br/><br/><br/>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">User</th>
+                    <th scope="col" class="text-center">Password</th>
+                    <th scope="col" class="text-center">Role</th>
+                    <th scope="col" class="text-center">Creation Date</th>
+                    <th scope="col" class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" style="max-width: 100px;">
+                        <div class="d-flex justify-content-center align-top" >
+                            <img class="rounded-4 img-thumbnail mr-4" style="max-width: 70px;" src="../static/219969.png" alt="">
+                            <p class="text-center">Dr Er</p>
+                        </div>
+                    </th>
+                    <td class="text-center align-top">password</td>
+                    <td class="text-center">Cristina</td>
+                    <td class="text-center">913</td>
+                    <td>
+                        <div class="d-flex justify-content-around">
+                            <div>Edit</div>
+                            <div>Delete</div>
+                            <div>Approve</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/><br/>
+
+    <div class="d-flex justify-content-center">
+        <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href="/welcome"> Return </a>
+    </div>
+
+{% endblock %}
