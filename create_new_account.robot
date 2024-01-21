@@ -6,6 +6,11 @@ Library    SeleniumLibrary
 ${website_url}    http://127.0.0.1:5000
 ${new_user_username}      Heeello
 ${new_user_password}      12456977
+${create_new_user_link}    xpath=//a[contains(text(),' Create New User ')]
+${create_new_user_button}    xpath=//button[contains(text(),' Create New User ')]
+${error_message}    css=.alert.alert-danger
+${success_message}    css=.alert.alert-success
+${cancel}       xpath=//a[contains(text(),' Cancel ')]
 
 *** Test Cases ***
 Launching website
@@ -17,11 +22,11 @@ Launching website
     Sleep    2s
 
 Creating New Account - Success
-    Click Element    xpath=//a[contains(@class,'btn-success') and contains(text(),' Create New User ')]   
+    Click Element    {create_new_user_link}  
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
     Input Text    id=password    ${new_user_password}
-    Click Element    xpath=//button[contains(text(),' Create New User ')]
+    Click Element    ${create_new_user_button}
     Wait Until Element Is Visible    css=.alert.alert-success
     Wait Until Page Contains    ${new_user_username}
     Sleep    3s
@@ -30,14 +35,14 @@ Creating New Account - Success
     Sleep    2s
 
 Creating New Account - Failed Existing Account
-    Click Element    xpath=//a[contains(@class,'btn-success') and contains(text(),' Create New User ')]   
+    Click Element    {create_new_user_link}   
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
     Input Text    id=password    ${new_user_password}
-    Click Element    xpath=//button[contains(text(),' Create New User ')]
+    Click Element    ${create_new_user_button}
     Sleep    3s
     Wait Until Element Is Visible    css=.alert.alert-danger
-    Click Element    xpath=//a[contains(text(),' Cancel ')]
+    Click Element    
     Sleep    2s
 
 Creating New Account - Failed Username Exists Password New
