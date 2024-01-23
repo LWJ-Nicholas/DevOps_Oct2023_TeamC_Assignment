@@ -107,8 +107,9 @@
     cursor: pointer;
 }
 </style>
+
 {% endblock %}
-{% block title %}Query{% endblock %}
+{% block title %}Create Entry{% endblock %}
 
 
 {% block content %}
@@ -117,7 +118,7 @@
         
     </p>
 
-    <form method="post" action="/form">
+    <form method="post" action="/create-entry">
 
         <div  class="form">
 
@@ -135,7 +136,7 @@
                 <div class="FormGroup2">
                     <div class="floating-input">
                         <label for = "student"> <B>NO. OF STUDENT</B> </label><br>
-                        <input type = "text" id = "student"  placeholder="e.g. 4"><br>
+                        <input type = "text" id = "numofstudents"  placeholder="e.g. 4"><br>
                     </div>
                     <div class="floating-input">
                         <label for = "company"> <B>NAME OF COMPANY</B> </label><br>

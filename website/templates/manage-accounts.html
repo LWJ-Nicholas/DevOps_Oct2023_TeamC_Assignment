@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Account{% endblock %}
+
+{% block content %}
+    <h1 class="text-center fw-bold" style="font-size: 60px; margin-top: 15px; margin-bottom: 30px;">Account Management</h1>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Username</th>
+                    <th scope="col" class="text-center">Role</th>
+                    <th scope="col" class="text-center">Creation Date</th>
+                    <th scope="col" class="text-center">Approving Personale</th>
+                    <th scope="col" class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in user_details_list %}
+                    <tr>
+                        <th scope="row" style="max-width: 100px;">{{ user.username }}</th>
+                        <td class="text-center align-top">{{ user.isAdmin }}</td>
+                        <td class="text-center">{{ user.date_created }}</td>
+                        <td class="text-center">{{ user.approvedBy }}</td>
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <form action="{{ url_for('delete_movie') }}" method=post class=delete-movie><input type=submit value=Delete name=movie_to_delete">
+                                    
+                                </form>
+                                <a href="">Edit</a>
+                                <a onclick="confirmDelete" >Delete</a>
+                                <a href="">Approve</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br/><br/>
+
+    <div class="d-flex justify-content-center">
+        <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href="/welcome"> Return </a>
+    </div>
+
+{% endblock %}
+
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure you want to delete this account?");
+        if (result) {
+            fetch('/delete/user/{{ user.id }}', {
+                method: 'POST',
+                body: JSON.stringify(fragments)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    window.location.href = '/scriptDownload/{{ guide_name }}';
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting data fragments: ', error);
+            });
+        }
+    }
+</script>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block nav %}
+    <div class="navbar-nav ml-auto" style="margin-right: 100px;">
+        <a class="btn btn-primary btn-danger btn-lg" style="width: 120px" id="logout" href="/logout">Logout</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="text-center fw-bold" style="font-size: 60px; margin-top:200px;">Hi {{current_user.username}}.</h1>
+    <h1 class="text-center fw-bold" style="font-size: 60px; margin-bottom:100px;">Welcome to the TSAO Capstone Records System</h1>
+    
+    <div class="d-flex justify-content-center">
+            <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href="/create-entry"> Create </a>
+            {% if current_user.isAdmin==True %}
+                <a type="submit" class="btn btn-primary btn-success btn-lg" style="width:200px" href="/manage-accounts"> Manage Accounts </a>
+            {% endif %}
+            <a type="submit" class="btn btn-primary btn-success btn-lg ml-5" style="width:200px" href="/search-entry"> Query </a>
+        </div>
+    </div>
+
+{% endblock %}
