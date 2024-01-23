@@ -35,8 +35,14 @@ def create_app():
     # create admin account
     with app.app_context():
         if db.session.query(User).filter_by(username='Admin').count() < 1:
-            admin = User(username='Admin', password=generate_password_hash('password', method='pbkdf2'), isAdmin=1)
+            admin = User(username='Admin', password=generate_password_hash('password', method='pbkdf2'), isAdmin=1, isApproved=1, approvedBy='Admin')
             db.session.add(admin)
+            db.session.commit()
+    
+    with app.app_context():
+        if db.session.query(User).filter_by(username='User').count() < 1:
+            user = User(username='User', password=generate_password_hash('password', method='pbkdf2'), isAdmin=0, isApproved=1, approvedBy='Admin')
+            db.session.add(user)
             db.session.commit()
 
     return app
