@@ -48,7 +48,7 @@ def createAccount():
             flash('Password must be greater than 7 characters.',category='error')
         else:
             new_user = User(username=username, password=generate_password_hash(
-                password, method='pbkdf2'))
+                password, method='pbkdf2'),role='user')
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
