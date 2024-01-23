@@ -1,0 +1,8 @@
+flake8
+pytest
+pytest-cov
+Flask
+Jinja2
+passlib
+flask_login
+flask_sqlalchemy
