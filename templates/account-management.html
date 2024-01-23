@@ -1,0 +1,98 @@
+<!-- This is a base template file for creating new pages -->
+<!-- Extends basically adds the stuff from base.html like bootstrap, the capstone logo thing and the css -->
+{% extends "base.html" %}
+
+<!-- Change the words "Template" to change the title of the page -->
+{% block title %}Account Management{% endblock %}
+
+
+{% block stylesheet %}
+<style>
+    /* styles.css */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 20px;
+    }
+
+    h2 {
+        color: #333;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    button {
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2>Account Management</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Creation Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dr Er</td>
+            <td>1233456</td>
+            <td>Administrator</td>
+            <td>-</td>
+            <td>Edit Delete Approve</td>
+        </tr>
+
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.password }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.creation_date or '-' }}</td>
+            <td>
+                <a href="#">Edit</a>
+                <br>
+                <a href="#">Delete</a>
+                <br>
+                <a href="#">Approve</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<button class="btn btn-primary" href="/logout">Return</button>
+{% endblock %}

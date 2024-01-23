@@ -80,4 +80,11 @@ def form():
         # Return a response (you can redirect or render a template)
         return render_template('success.html', name=name)  # Render a success page with the submitted name
 
-    return render_template('CreateEntry.html')
+    return render_template('create-entry.html')
+
+@auth.route('/account-management', methods=['GET', 'POST'])
+@login_required
+def manage_account():
+    users = User.query.all()
+    #jinja2.exceptions.TemplateNotFound: account-management.html
+    return render_template('account-management.html', users=users, current_user=current_user)
