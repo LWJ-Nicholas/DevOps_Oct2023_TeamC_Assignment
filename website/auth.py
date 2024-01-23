@@ -32,7 +32,7 @@ def logout():
     flash('Logged out successfully!',category='success')
     return redirect('/')
 
-@auth.route('/create-account',methods=['GET','POST'])
+@auth.route('/register',methods=['GET','POST'])
 def createAccount():
     if request.method == "POST":
         username = request.form.get('username')
@@ -57,7 +57,7 @@ def createAccount():
 
             return redirect(url_for('auth.welcome'))
 
-    return render_template("create-account.html",user=current_user)
+    return render_template("register.html",user=current_user)
 
 @auth.route('/welcome')
 @login_required
