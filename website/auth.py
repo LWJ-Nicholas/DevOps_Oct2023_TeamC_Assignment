@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from .models import User, Records
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -14,15 +14,21 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
+        account_validity = User.query.filter_by(username=username).first().isApproved
+
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category='success')
-                login_user(user, remember=True)
-                return redirect(url_for('auth.welcome'))
+                if account_validity == False:
+                    flash('Account not yet approved', category='error')
+                    return redirect(url_for('auth.login'))
+                else:
+                    flash('Logged in successfully!', category='success')
+                    login_user(user, remember=True)
+                    return redirect(url_for('auth.welcome'))
             else:
-                flash('Incorrect password, try again.', category='error')
+                flash('Incorrect username or password', category='error')
         else:
-            flash('Username does not exist.', category='error')
+            flash('Incorrect username or password', category='error')
 
     return render_template("login.html", user=current_user)
 
@@ -35,7 +41,7 @@ def logout():
     return redirect('/')
 
 
-@auth.route('/create-account', methods=['GET', 'POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 def createAccount():
     if request.method == "POST":
         username = request.form.get('username')
@@ -54,35 +60,42 @@ def createAccount():
                 password, method='pbkdf2'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user, remember=True)
 
             flash('Account created!', category='success')
 
-            return redirect(url_for('auth.welcome'))
+            return redirect(url_for('auth.login'))
 
-    return render_template("create-account.html", user=current_user)
-
+    return render_template("register.html", user=current_user)
 
 @auth.route('/welcome')
 @login_required
 def welcome():
     return render_template("welcome.html", user=current_user)
 
-
-# Route for the form page
-@auth.route('/form', methods=['GET', 'POST'])
+@auth.route('/create-entry', methods=['GET', 'POST'])
 def form():
     if request.method == 'POST':
         # Access form data
+        title = request.form['title']
         name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
+        numofstudents = request.form['numofstudents']
+        company = request.form['company']
+        year = request.form['year']
+        companycontact = request.form['companycontact']
+        description = request.form['description']
+        staff = request.form['staff']
+        student = request.form['student']
+        
+        if title == '' or name == '' or numofstudents == '' or company == '' or year == '' or companycontact == '' or description == '' or staff == '' or student == '':
+            flash('Please fill out all fields', category='error')
+            return redirect(url_for('auth.form'))
+        else:
+            new_entry = Records(title=title, name=name, numofstudents=numofstudents, company=company, year=year, companycontact=companycontact, description=description, staff=staff, student=student)
+            db.session.add(new_entry)
+            db.session.commit()
+            flash('Record created!', category='success')
+            # Return a response (you can redirect or render a template)
+            return render_template('search-entry.html', name=name)
 
-        # Do something with the form data (you can process or store it)
-        # For example, print the data to the console
-        print(f"Name: {name}, Email: {email}, Message: {message}")
+    return render_template('create-entry.html')
 
-        # Return a response (you can redirect or render a template)
-        return render_template('success.html', name=name)  # Render a success page with the submitted name
-
-    return render_template('CreateEntry.html')
