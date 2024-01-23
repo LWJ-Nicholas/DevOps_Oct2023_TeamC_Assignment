@@ -13,7 +13,7 @@ ${create_anchor}    xpath=//a[contains(text(),' Create New User ')]
 ${create_btn}    xpath=//button[contains(text(),' Create New User ')]
 ${cancel_btn}    xpath=//a[contains(text(),' Cancel ')]
 ${success_msg}    xpath=//div[contains(@class, 'alert-success') and contains(normalize-space(text()), 'Account created!')]    
-${error_msg1}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Email already exists')]
+${error_msg1}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'User already exists')]
 ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Username must be greater than 2 characters.')]
 
 *** Test Cases ***
@@ -25,6 +25,7 @@ Launching website
     Sleep    2s
 
 Creating New Account - Success
+    ${result}    Run Keyword And Ignore Error    Set Variable    ${failed_page}    ${True}
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
@@ -38,6 +39,7 @@ Creating New Account - Success
     Sleep    2s
 
 Creating New Account - Failed Existing Account
+    #Click Element    ${login_anchor}
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
