@@ -3,27 +3,28 @@
 {% block title %}Welcome{% endblock %}
 
 {% block nav %}
-    <div class="navbar-nav ml-auto" style="margin-right: 100px;">
+    <div class="navbar-nav ml-auto" style="margin-right: 100px; margin-bottom: 50px;">
         <a class="btn btn-primary btn-danger btn-lg" style="width: 120px" id="logout" href="/logout">Logout</a>
     </div>
 {% endblock %}
 
 {% block content %}
-    <br/><br/><br/><br/><br/>
-    {% if current_user.isAdmin==False %}
-        <h1 class="text-center fw-bold" style="font-size: 60px;">Hi {{current_user.username}}.</h1>
-        <h1 class="text-center fw-bold" style="font-size: 60px;">Welcome to the TSAO Capstone Records System</h1>
-        <br/><br/><br/>
-    
+    {% if current_user.role!='Admin' %}
+        <div style="margin-bottom: 30px;">
+            <h1 class="text-center fw-bold" style="font-size: 60px;">Hi {{current_user.username}}.</h1>
+            <h1 class="text-center fw-bold" style="font-size: 60px;">Welcome to the TSAO Capstone Records System</h1>
+            <br/><br/><br/>
+        </div>
         <div class="d-flex justify-content-center">
             <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href=""> Create </a>
             <a type="submit" class="btn btn-primary btn-success btn-lg invisible" style="width:200px" href=""> Modify Accounts </a>
             <a type="submit" class="btn btn-primary btn-success btn-lg ml-5" style="width:200px" href=""> Query </a>
         </div>
     {% else %}
+    <div style="margin-bottom: 30px;">
         <h1 class="text-center fw-bold" style="font-size: 60px;">Hi Administrator.</h1>
             <h1 class="text-center fw-bold" style="font-size: 60px;">Welcome to the TSAO Capstone Records System</h1>
-    <br/><br/><br/>
+    </div>
 
     <div class="d-flex justify-content-center">
         <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href="/form"> Create </a>
