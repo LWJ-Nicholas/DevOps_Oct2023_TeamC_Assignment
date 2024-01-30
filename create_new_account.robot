@@ -19,7 +19,7 @@ ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(norma
 Launching website
     # Go to website and check went to correct website (pre-requisite)
     Open Browser    ${website_url}    headlesschrome
-    #Title Should Be    Home    
+    Title Should Be    Home    
     Click Element    ${login_anchor}      
     Sleep    2s
 
@@ -38,7 +38,7 @@ Launching website
 #     Sleep    2s
 
 Creating New Account - Failed Existing Account
-    Click Element    ${login_anchor}
+    #Click Element    ${login_anchor}
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
@@ -75,11 +75,11 @@ Creating New Account - Failed Attempt to create weak username
     # Username needs to be at least 2 characters 
     Click Element    ${create_anchor}    
     Wait Until Page Contains    Create Account
-    Input Text    id=username    Hi
+    Input Text    id=username    m
     Input Text    id=password    123456789
     Click Element    ${create_btn}    
     Sleep    3s
-    Wait Until Element Is Visible    ${error_msg1}
+    Wait Until Element Is Visible    ${error_msg2}
     Click Element    ${cancel_btn}    
     Sleep    2s
 

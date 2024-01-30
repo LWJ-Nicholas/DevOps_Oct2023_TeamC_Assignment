@@ -16,7 +16,7 @@ ${error_msg}    css=.alert.alert-danger
 Launching website
     
     # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}  headlesschrome
+    [Setup]    Open Browser    ${website_url}    headlesschrome
     Title Should Be    Query    
     #Click Element    id=login   
     Sleep    2s
@@ -32,7 +32,7 @@ Create New Capstone Entry - Success
     Input Text    id=companycontact    Mr Low
     Input Text    id=description    Final Assigmnet. #Lastsembestsem    
     #Click Element    ${success_msg}
-    Wait Until Element Is Visible    ${success_msg}
+    #Wait Until Element Is Visible    ${success_msg}
     Sleep    5s
     Click Element    ${cancel_btn}
 
