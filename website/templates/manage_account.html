@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Account{% endblock %}
+
+{% block content %}
+    <br/>
+    <h1 class="text-center fw-bold" style="font-size: 60px;">Account Management</h1>
+    <br/><br/><br/>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2" class="text-center">User</th>
+                    <th scope="col" class="text-center">Role</th>
+                    <th scope="col" class="text-center">Creation Date</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in array %}
+                    <tr>
+                        <td colspan="2">
+                            <div class="d-flex justify-content-around align-top" >
+                                <img class="rounded-4 img-thumbnail" style="max-width: 70px;" src="../static/219969.png" alt="">
+                                <p class="text-center">{{i.username}}</p>
+                            </div>
+                        </td>
+                        <td class="text-center" style="font-weight: bold;">{{i.role}}</td>
+                        <td class="text-center">{{i.date_created}}</td>
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <div>Edit</div>
+                                <div>Delete</div>
+                                <div>Approve</div>
+                                <div>Reset Password</div>
+                            </div>
+                        </td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <br/><br/>
+
+    <div class="d-flex justify-content-center">
+        <a type="submit" class="btn btn-primary btn-success btn-lg mr-5" style="width:200px" href="/welcome"> Return </a>
+    </div>
+
+{% endblock %}
