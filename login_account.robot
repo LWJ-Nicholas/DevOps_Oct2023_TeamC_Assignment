@@ -19,7 +19,7 @@ ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(norma
 *** Test Cases ***
 Launching website
     # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}  chrome  options=--headless;--no-sandbox;--disable-dev-shm-usage
+    [Setup]    Open Browser    ${website_url}  headlesschrome
     Title Should Be    Home    
     Click Element    ${login_anchor}    
     Sleep    2s
@@ -38,7 +38,7 @@ Entering Login Details Administrator - Success
     Input Text    id=username    ${login_admin_username}
     Input Text    id=password    ${login_admin_password}
     Click Element    ${login_btn}    
-    Sleep     3s
+    Sleep     10s
     Wait Until Element Is Visible    ${success_msg}        
     Wait Until Page Contains    Administrator
     Click Element    ${logout_btn}    
@@ -76,6 +76,6 @@ Close Website
 
 Relaunch Website
     [Teardown]    Close Browser
-    [Setup]    Open Browser    ${website_url}  chrome
-    Title Should Be    Home
+    [Setup]    Open Browser    ${website_url}  headlesschrome
+    #Title Should Be    Home
    

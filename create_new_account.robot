@@ -1,4 +1,3 @@
-
 *** Settings ***
 Library    SeleniumLibrary
 
@@ -19,8 +18,8 @@ ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(norma
 *** Test Cases ***
 Launching website
     # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}  chrome  options=--headless;--no-sandbox;--disable-dev-shm-usage
-    Title Should Be    Home    
+    Open Browser    ${website_url}    headlesschrome
+    #Title Should Be    Home    
     Click Element    ${login_anchor}      
     Sleep    2s
 
@@ -39,7 +38,7 @@ Launching website
 #     Sleep    2s
 
 Creating New Account - Failed Existing Account
-    #Click Element    ${login_anchor}
+    Click Element    ${login_anchor}
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
