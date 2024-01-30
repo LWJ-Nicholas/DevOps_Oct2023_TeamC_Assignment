@@ -1,5 +1,5 @@
 import unittest
-from database import app, db, User
+from database.database import User
 from datetime import datetime
 
 class DatabaseTest(unittest.TestCase):
