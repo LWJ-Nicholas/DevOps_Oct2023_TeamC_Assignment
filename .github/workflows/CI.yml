@@ -58,19 +58,6 @@ jobs:
           status -        `${{ job.status }}`
           assignees: LWJ-Nicholas
 
-    - name: Request approval
-      if: ${{ failure() }}
-      uses: actions/github-script@v5
-      with:
-        script: |
-          const issueComment = {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: ${{ steps.create_issue.outputs.issue-number }},
-            body: '@HanisahMusrin can you please approve this issue?'
-          };
-          github.rest.issues.createComment(issueComment);
-          
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
