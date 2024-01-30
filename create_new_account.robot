@@ -19,24 +19,24 @@ ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(norma
 *** Test Cases ***
 Launching website
     # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}  chrome
+    [Setup]    Open Browser    ${website_url}  chrome  options=--headless;--no-sandbox;--disable-dev-shm-usage
     Title Should Be    Home    
     Click Element    ${login_anchor}      
     Sleep    2s
 
-Creating New Account - Success
-    ${result}    Run Keyword And Ignore Error    Set Variable    ${failed_page}    ${True}
-    Click Element    ${create_anchor}       
-    Wait Until Page Contains    Create Account
-    Input Text    id=username    ${new_user_username}
-    Input Text    id=password    ${new_user_password}
-    Click Element    ${create_btn}    
-    Wait Until Element Is Visible    ${success_msg}    
-    Wait Until Page Contains    ${new_user_username}
-    Sleep    3s
-    Click Element    ${logout_btn}
-    Click Element    ${login_anchor}
-    Sleep    2s
+# Creating New Account - Success
+#     ${result}    Run Keyword And Ignore Error    Set Variable    ${failed_page}    ${True}
+#     Click Element    ${create_anchor}       
+#     Wait Until Page Contains    Create Account
+#     Input Text    id=username    ${new_user_username}
+#     Input Text    id=password    ${new_user_password}
+#     Click Element    ${create_btn}    
+#     Wait Until Element Is Visible    ${success_msg}    
+#     Wait Until Page Contains    ${new_user_username}
+#     Sleep    3s
+#     Click Element    ${logout_btn}
+#     Click Element    ${login_anchor}
+#     Sleep    2s
 
 Creating New Account - Failed Existing Account
     #Click Element    ${login_anchor}

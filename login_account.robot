@@ -19,7 +19,7 @@ ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(norma
 *** Test Cases ***
 Launching website
     # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}  chrome
+    [Setup]    Open Browser    ${website_url}  chrome  options=--headless;--no-sandbox;--disable-dev-shm-usage
     Title Should Be    Home    
     Click Element    ${login_anchor}    
     Sleep    2s
