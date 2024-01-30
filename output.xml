@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0 (Python 3.12.0 on win32)" generated="2024-01-30T22:28:51.033105" rpa="false" schemaversion="5">
+<robot generator="Robot 7.0 (Python 3.12.0 on win32)" generated="2024-01-30T22:44:39.715212" rpa="false" schemaversion="5">
 <suite id="s1" name="Testing Database" source="C:\Users\ivich\Desktop\DevOps_Oct2023_TeamC_Assignment\testing_database.robot">
 <test id="s1-t1" name="Example SQLite Test" line="12">
 <kw name="Connect To Database Using Custom Params" owner="DatabaseLibrary" type="SETUP">
-<msg time="2024-01-30T22:28:51.059874" level="INFO">Executing : Connect To Database Using Custom Params : sqlite3.connect(db_api_2.connect(database='database.db'))</msg>
+<msg time="2024-01-30T22:44:39.745632" level="INFO">Executing : Connect To Database Using Custom Params : sqlite3.connect(db_api_2.connect(database= '/instance/{DB_NAME}'))</msg>
+<msg time="2024-01-30T22:44:39.746716" level="FAIL">OperationalError: unable to open database file</msg>
 <arg>sqlite3</arg>
-<arg>database='${DB_NAME}'</arg>
+<arg>database= '/instance/{DB_NAME}'</arg>
 <doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
 connect to the database using the map string `db_connect_string`
 (parsed as a list of named arguments).</doc>
-<status status="PASS" start="2024-01-30T22:28:51.057138" elapsed="0.002736"/>
-</kw>
-<kw name="Query" owner="DatabaseLibrary">
-<msg time="2024-01-30T22:28:51.061380" level="INFO">Executing : Query  |  SELECT * FROM user </msg>
-<msg time="2024-01-30T22:28:51.061380" level="FAIL">OperationalError: no such table: user</msg>
-<var>${result}</var>
-<arg>SELECT * FROM user</arg>
-<doc>Runs a query with the ``selectStatement`` and returns the result as a list of rows.
-The type of row values depends on the database module -
-usually they are tuples or tuple-like objects.</doc>
-<status status="FAIL" start="2024-01-30T22:28:51.061380" elapsed="0.001011">OperationalError: no such table: user</status>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<arg>${result}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" start="2024-01-30T22:28:51.062391" elapsed="0.000000"/>
+<status status="FAIL" start="2024-01-30T22:44:39.742631" elapsed="0.004085">OperationalError: unable to open database file</status>
 </kw>
 <kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
-<msg time="2024-01-30T22:28:51.063386" level="INFO">Executing : Disconnect From Database</msg>
+<msg time="2024-01-30T22:44:39.747649" level="INFO">Executing : Disconnect From Database</msg>
+<msg time="2024-01-30T22:44:39.747649" level="INFO">No open database connection to close</msg>
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2024-01-30T22:28:51.063386" elapsed="0.000000"/>
+<status status="PASS" start="2024-01-30T22:44:39.747649" elapsed="0.000000"/>
 </kw>
-<status status="FAIL" start="2024-01-30T22:28:51.056227" elapsed="0.007937">OperationalError: no such table: user</status>
+<status status="FAIL" start="2024-01-30T22:44:39.741625" elapsed="0.006868">Setup failed:
+OperationalError: unable to open database file</status>
 </test>
-<status status="FAIL" start="2024-01-30T22:28:51.034682" elapsed="0.030489"/>
+<status status="FAIL" start="2024-01-30T22:44:39.716122" elapsed="0.034046"/>
 </suite>
 <statistics>
 <total>
