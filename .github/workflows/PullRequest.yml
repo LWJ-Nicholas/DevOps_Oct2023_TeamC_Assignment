@@ -40,7 +40,7 @@ jobs:
       env:
         SELENIUM_BROWSER: headlesschrome
       run: |
-        robot your_test_file.robot
+        robot .
 
     - name: Create Issue on Failed workflow
       if: ${{ failure() }}
