@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0 (Python 3.12.0 on win32)" generated="2024-01-30T22:05:55.277800" rpa="false" schemaversion="5">
+<robot generator="Robot 7.0 (Python 3.12.0 on win32)" generated="2024-01-30T22:28:51.033105" rpa="false" schemaversion="5">
 <suite id="s1" name="Testing Database" source="C:\Users\ivich\Desktop\DevOps_Oct2023_TeamC_Assignment\testing_database.robot">
-<kw name="Initialize Database Connection" type="SETUP">
-<kw name="Connect To Database" owner="DatabaseLibrary">
-<msg time="2024-01-30T22:05:55.316555" level="INFO">Connecting using : pymysql.connect(db=database.db, user=null, passwd=***, host=localhost, port=3306, charset=None)</msg>
-<msg time="2024-01-30T22:05:59.419190" level="FAIL">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</msg>
-<arg>pymysql</arg>
-<arg>${DBName}</arg>
-<arg>${DBUser}</arg>
-<arg>${DBPass}</arg>
-<arg>${DBHost}</arg>
-<arg>${DBPort}</arg>
-<doc>Loads the DB API 2.0 module given ``dbapiModuleName`` then uses it to
-connect to the database using provided parameters such as ``dbName``, ``dbUsername``, and ``dbPassword``.</doc>
-<status status="FAIL" start="2024-01-30T22:05:55.306873" elapsed="4.113887">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
+<test id="s1-t1" name="Example SQLite Test" line="12">
+<kw name="Connect To Database Using Custom Params" owner="DatabaseLibrary" type="SETUP">
+<msg time="2024-01-30T22:28:51.059874" level="INFO">Executing : Connect To Database Using Custom Params : sqlite3.connect(db_api_2.connect(database='database.db'))</msg>
+<arg>sqlite3</arg>
+<arg>database='${DB_NAME}'</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_connect_string`
+(parsed as a list of named arguments).</doc>
+<status status="PASS" start="2024-01-30T22:28:51.057138" elapsed="0.002736"/>
 </kw>
-<status status="FAIL" start="2024-01-30T22:05:55.305866" elapsed="4.115846">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2024-01-30T22:28:51.061380" level="INFO">Executing : Query  |  SELECT * FROM user </msg>
+<msg time="2024-01-30T22:28:51.061380" level="FAIL">OperationalError: no such table: user</msg>
+<var>${result}</var>
+<arg>SELECT * FROM user</arg>
+<doc>Runs a query with the ``selectStatement`` and returns the result as a list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="FAIL" start="2024-01-30T22:28:51.061380" elapsed="0.001011">OperationalError: no such table: user</status>
 </kw>
-<test id="s1-t1" name="Example Flask-SQLAlchemy Test" line="20">
-<status status="FAIL" start="2024-01-30T22:05:59.421712" elapsed="0.000000">Parent suite setup failed:
-OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
-</test>
+<kw name="Log" owner="BuiltIn">
+<arg>${result}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2024-01-30T22:28:51.062391" elapsed="0.000000"/>
+</kw>
 <kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
-<msg time="2024-01-30T22:05:59.424502" level="INFO">Executing : Disconnect From Database</msg>
-<msg time="2024-01-30T22:05:59.424502" level="INFO">No open database connection to close</msg>
+<msg time="2024-01-30T22:28:51.063386" level="INFO">Executing : Disconnect From Database</msg>
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2024-01-30T22:05:59.424502" elapsed="0.000000"/>
+<status status="PASS" start="2024-01-30T22:28:51.063386" elapsed="0.000000"/>
 </kw>
-<status status="FAIL" start="2024-01-30T22:05:55.278780" elapsed="4.145722">Suite setup failed:
-OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
+<status status="FAIL" start="2024-01-30T22:28:51.056227" elapsed="0.007937">OperationalError: no such table: user</status>
+</test>
+<status status="FAIL" start="2024-01-30T22:28:51.034682" elapsed="0.030489"/>
 </suite>
 <statistics>
 <total>

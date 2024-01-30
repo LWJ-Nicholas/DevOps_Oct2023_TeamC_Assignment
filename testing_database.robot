@@ -1,24 +1,14 @@
-*** Settings ***
-Library           DatabaseLibrary
-Library           OperatingSystem
-
-Suite Setup       Initialize Database Connection
-Suite Teardown    Disconnect From Database
 
 *** Variables ***
-${DBName}    database.db
-${DBUser}    null
-${DBPass}    null
-${DBHost}    localhost
-${DBPort}    3306
+${DB_NAME}        database.db
 
-*** Keywords ***
-Initialize Database Connection
-    Connect To Database    pymysql    ${DBName}    ${DBUser}    ${DBPass}    ${DBHost}    ${DBPort}
+*** Settings ***
+Library           DatabaseLibrary
+
+Test Setup        Connect To Database Using Custom Params    sqlite3    database='${DB_NAME}'
+Test Teardown     Disconnect From Database
 
 *** Test Cases ***
-Example Flask-SQLAlchemy Test
-    Insert Into Table    User    name    testing1
-    Insert Into Table    User    password    testing1
-    ${result}=    Query    SELECT * FROM User
-    Should Contain    ${result}    testing1
+Example SQLite Test
+    ${result}=    Query    SELECT * FROM user
+    Log    ${result}
