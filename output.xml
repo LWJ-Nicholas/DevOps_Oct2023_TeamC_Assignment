@@ -1,283 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20240130 21:00:09.489" rpa="false" schemaversion="4">
-<suite id="s1" name="Login Account" source="C:\Users\ivich\Desktop\DevOps_Oct2023_TeamC_Assignment\login_account.robot">
-<test id="s1-t1" name="Launching website" line="20">
-<kw name="Open Browser" library="SeleniumLibrary" type="SETUP">
-<arg>${website_url}</arg>
-<arg>headlesschrome</arg>
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20240130 21:00:09.638" level="INFO">Opening browser 'headlesschrome' to base url 'http://127.0.0.1:5000'.</msg>
-<status status="PASS" starttime="20240130 21:00:09.638" endtime="20240130 21:00:11.428"/>
+<robot generator="Robot 7.0 (Python 3.12.0 on win32)" generated="2024-01-30T22:05:55.277800" rpa="false" schemaversion="5">
+<suite id="s1" name="Testing Database" source="C:\Users\ivich\Desktop\DevOps_Oct2023_TeamC_Assignment\testing_database.robot">
+<kw name="Initialize Database Connection" type="SETUP">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2024-01-30T22:05:55.316555" level="INFO">Connecting using : pymysql.connect(db=database.db, user=null, passwd=***, host=localhost, port=3306, charset=None)</msg>
+<msg time="2024-01-30T22:05:59.419190" level="FAIL">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</msg>
+<arg>pymysql</arg>
+<arg>${DBName}</arg>
+<arg>${DBUser}</arg>
+<arg>${DBPass}</arg>
+<arg>${DBHost}</arg>
+<arg>${DBPort}</arg>
+<doc>Loads the DB API 2.0 module given ``dbapiModuleName`` then uses it to
+connect to the database using provided parameters such as ``dbName``, ``dbUsername``, and ``dbPassword``.</doc>
+<status status="FAIL" start="2024-01-30T22:05:55.306873" elapsed="4.113887">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
 </kw>
-<kw name="Title Should Be" library="SeleniumLibrary">
-<arg>Home</arg>
-<doc>Verifies that the current page title equals ``title``.</doc>
-<msg timestamp="20240130 21:00:11.439" level="INFO">Page title is 'Home'.</msg>
-<status status="PASS" starttime="20240130 21:00:11.429" endtime="20240130 21:00:11.439"/>
+<status status="FAIL" start="2024-01-30T22:05:55.305866" elapsed="4.115846">OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
 </kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_anchor}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:11.441" level="INFO">Clicking element 'xpath=//a[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:11.440" endtime="20240130 21:00:11.550"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>2s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:13.551" level="INFO">Slept 2 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:11.550" endtime="20240130 21:00:13.551"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:09.637" endtime="20240130 21:00:13.551"/>
+<test id="s1-t1" name="Example Flask-SQLAlchemy Test" line="20">
+<status status="FAIL" start="2024-01-30T22:05:59.421712" elapsed="0.000000">Parent suite setup failed:
+OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
 </test>
-<test id="s1-t2" name="Entering Login Details User - Success" line="27">
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=username</arg>
-<arg>${login_user_username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:13.553" level="INFO">Typing text 'Hello' into text field 'id=username'.</msg>
-<status status="PASS" starttime="20240130 21:00:13.553" endtime="20240130 21:00:13.642"/>
+<kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
+<msg time="2024-01-30T22:05:59.424502" level="INFO">Executing : Disconnect From Database</msg>
+<msg time="2024-01-30T22:05:59.424502" level="INFO">No open database connection to close</msg>
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2024-01-30T22:05:59.424502" elapsed="0.000000"/>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=password</arg>
-<arg>${login_user_password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:13.643" level="INFO">Typing text '1234567' into text field 'id=password'.</msg>
-<status status="PASS" starttime="20240130 21:00:13.643" endtime="20240130 21:00:13.718"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:13.718" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:13.718" endtime="20240130 21:00:13.795"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>10s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:23.795" level="INFO">Slept 10 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:13.795" endtime="20240130 21:00:23.795"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${success_msg}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<msg timestamp="20240130 21:00:29.086" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg timestamp="20240130 21:00:29.086" level="FAIL">Element 'xpath=//div[contains(@class, 'alert-success') and contains(normalize-space(text()), 'Logged in successfully!')]' not visible after 5 seconds.</msg>
-<status status="FAIL" starttime="20240130 21:00:23.796" endtime="20240130 21:00:29.088"/>
-</kw>
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<arg>${login_user_username}</arg>
-<doc>Waits until ``text`` appears on the current page.</doc>
-<status status="NOT RUN" starttime="20240130 21:00:29.088" endtime="20240130 21:00:29.088"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${logout_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<status status="NOT RUN" starttime="20240130 21:00:29.088" endtime="20240130 21:00:29.088"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_anchor}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<status status="NOT RUN" starttime="20240130 21:00:29.088" endtime="20240130 21:00:29.088"/>
-</kw>
-<status status="FAIL" starttime="20240130 21:00:13.552" endtime="20240130 21:00:29.090">Element 'xpath=//div[contains(@class, 'alert-success') and contains(normalize-space(text()), 'Logged in successfully!')]' not visible after 5 seconds.</status>
-</test>
-<test id="s1-t3" name="Entering Login Details Administrator - Success" line="37">
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=username</arg>
-<arg>${login_admin_username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:29.091" level="INFO">Typing text 'Admin' into text field 'id=username'.</msg>
-<status status="PASS" starttime="20240130 21:00:29.090" endtime="20240130 21:00:29.162"/>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=password</arg>
-<arg>${login_admin_password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:29.163" level="INFO">Typing text 'password' into text field 'id=password'.</msg>
-<status status="PASS" starttime="20240130 21:00:29.162" endtime="20240130 21:00:29.236"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:29.236" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:29.236" endtime="20240130 21:00:29.639"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>10s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:39.641" level="INFO">Slept 10 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:29.640" endtime="20240130 21:00:39.641"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${success_msg}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" starttime="20240130 21:00:39.641" endtime="20240130 21:00:39.663"/>
-</kw>
-<kw name="Wait Until Page Contains" library="SeleniumLibrary">
-<arg>Administrator</arg>
-<doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" starttime="20240130 21:00:39.663" endtime="20240130 21:00:39.677"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${logout_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:39.677" level="INFO">Clicking element 'xpath=//a[contains(text(),'Logout')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:39.677" endtime="20240130 21:00:39.779"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_anchor}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:39.780" level="INFO">Clicking element 'xpath=//a[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:39.779" endtime="20240130 21:00:39.848"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:29.090" endtime="20240130 21:00:39.848"/>
-</test>
-<test id="s1-t4" name="Entering Login Details - Fail Wrong Username" line="47">
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=username</arg>
-<arg>adm</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:39.849" level="INFO">Typing text 'adm' into text field 'id=username'.</msg>
-<status status="PASS" starttime="20240130 21:00:39.849" endtime="20240130 21:00:39.908"/>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=password</arg>
-<arg>${login_user_password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:39.910" level="INFO">Typing text '1234567' into text field 'id=password'.</msg>
-<status status="PASS" starttime="20240130 21:00:39.908" endtime="20240130 21:00:39.966"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:39.967" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:39.967" endtime="20240130 21:00:40.032"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${error_msg1}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" starttime="20240130 21:00:40.032" endtime="20240130 21:00:40.051"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>3s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:43.051" level="INFO">Slept 3 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:40.051" endtime="20240130 21:00:43.051"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:39.848" endtime="20240130 21:00:43.051"/>
-</test>
-<test id="s1-t5" name="Entering Login Details - Fail Wrong Password" line="54">
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=username</arg>
-<arg>${login_user_username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:43.054" level="INFO">Typing text 'Hello' into text field 'id=username'.</msg>
-<status status="PASS" starttime="20240130 21:00:43.053" endtime="20240130 21:00:43.111"/>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=password</arg>
-<arg>123456789</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:43.112" level="INFO">Typing text '123456789' into text field 'id=password'.</msg>
-<status status="PASS" starttime="20240130 21:00:43.111" endtime="20240130 21:00:43.169"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:43.170" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:43.169" endtime="20240130 21:00:43.246"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${error_msg2}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<msg timestamp="20240130 21:00:48.329" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg timestamp="20240130 21:00:48.329" level="FAIL">Element 'xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Incorrect password, try again.')]' not visible after 5 seconds.</msg>
-<status status="FAIL" starttime="20240130 21:00:43.247" endtime="20240130 21:00:48.330"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>3s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" starttime="20240130 21:00:48.330" endtime="20240130 21:00:48.330"/>
-</kw>
-<status status="FAIL" starttime="20240130 21:00:43.053" endtime="20240130 21:00:48.331">Element 'xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Incorrect password, try again.')]' not visible after 5 seconds.</status>
-</test>
-<test id="s1-t6" name="Entering Login Details - Fail Blank for both input fields" line="61">
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:48.332" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:48.332" endtime="20240130 21:00:48.401"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${error_msg1}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" starttime="20240130 21:00:48.402" endtime="20240130 21:00:48.417"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>3s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:51.417" level="INFO">Slept 3 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:48.417" endtime="20240130 21:00:51.417"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:48.332" endtime="20240130 21:00:51.418"/>
-</test>
-<test id="s1-t7" name="Entering Login Details - Fail Diff Username and password" line="66">
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=username</arg>
-<arg>${login_admin_username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:51.420" level="INFO">Typing text 'Admin' into text field 'id=username'.</msg>
-<status status="PASS" starttime="20240130 21:00:51.420" endtime="20240130 21:00:51.489"/>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<arg>id=password</arg>
-<arg>${login_user_password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:51.489" level="INFO">Typing text '1234567' into text field 'id=password'.</msg>
-<status status="PASS" starttime="20240130 21:00:51.489" endtime="20240130 21:00:51.557"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${login_btn}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20240130 21:00:51.557" level="INFO">Clicking element 'xpath=//button[contains(text(),'Login')]'.</msg>
-<status status="PASS" starttime="20240130 21:00:51.557" endtime="20240130 21:00:51.917"/>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<arg>${error_msg2}</arg>
-<doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" starttime="20240130 21:00:51.918" endtime="20240130 21:00:51.954"/>
-</kw>
-<kw name="Sleep" library="BuiltIn">
-<arg>3s</arg>
-<doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20240130 21:00:54.956" level="INFO">Slept 3 seconds</msg>
-<status status="PASS" starttime="20240130 21:00:51.955" endtime="20240130 21:00:54.956"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:51.420" endtime="20240130 21:00:54.956"/>
-</test>
-<test id="s1-t8" name="Close Website" line="73">
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20240130 21:00:54.958" endtime="20240130 21:00:57.091"/>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
-<doc>Closes the current browser.</doc>
-<status status="PASS" starttime="20240130 21:00:57.092" endtime="20240130 21:00:57.092"/>
-</kw>
-<status status="PASS" starttime="20240130 21:00:54.958" endtime="20240130 21:00:57.093"/>
-</test>
-<test id="s1-t9" name="Relaunch Website" line="77">
-<status status="FAIL" starttime="20240130 21:00:57.095" endtime="20240130 21:00:57.095">Test cannot be empty.</status>
-</test>
-<status status="FAIL" starttime="20240130 21:00:09.490" endtime="20240130 21:00:57.096"/>
+<status status="FAIL" start="2024-01-30T22:05:55.278780" elapsed="4.145722">Suite setup failed:
+OperationalError: (2003, "Can't connect to MySQL server on 'localhost' ([WinError 10061] No connection could be made because the target machine actively refused it)")</status>
 </suite>
 <statistics>
 <total>
-<stat pass="6" fail="3" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="6" fail="3" skip="0" id="s1" name="Login Account">Login Account</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="Testing Database">Testing Database</stat>
 </suite>
 </statistics>
 <errors>
