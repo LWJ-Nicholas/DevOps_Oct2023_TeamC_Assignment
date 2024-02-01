@@ -25,16 +25,6 @@ Launch Website
 Close Website
     Close Browser
   
-*** Keywords ***
-Launch Website
-    Open Browser    ${website_url}    headlesschrome
-    Title Should Be    Home    
-    Click Element    ${login_anchor}
-    Sleep    2s   
-
-Close Website
-    Close Browser
-
 *** Test Cases ***
 # Number of test cases: 7
 

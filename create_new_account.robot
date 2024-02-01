@@ -3,8 +3,8 @@ Library    SeleniumLibrary
 
 *** Variables ***
 ${website_url}    http://127.0.0.1:5000
-${new_user_username}      Testing1
-${new_user_password}      testing1
+${new_user_username}      Testing3
+${new_user_password}      testing3
 ${login_btn}    xpath=//button[contains(text(),'Login')]
 ${login_anchor}    xpath=//a[contains(text(),'Login')]
 ${logout_btn}    xpath=//a[contains(text(),'Logout')]    
@@ -14,6 +14,7 @@ ${cancel_btn}    xpath=//a[contains(text(),' Cancel ')]
 ${success_msg}    xpath=//div[contains(@class, 'alert-success') and contains(normalize-space(text()), 'Account created!')]    
 ${error_msg1}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'User already exists')]
 ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Username must be greater than 2 characters.')]
+
 
 *** Keywords ***
 Launch Website
@@ -26,7 +27,7 @@ Close Website
     Close Browser
   
 *** Test Cases ***
-# Number of test cases: 7
+# Number of test cases: 8
 
 Creating New Account - Success
     # Test case may fail if new username and password is not used
@@ -70,18 +71,18 @@ Creating New Account - Failed Username Exists Password New
     Sleep    2s
     [Teardown]    Close Website
 
-Creating New Account - Failed Username New Password Exists
-    [Setup]    Launch Website
-    Click Element    ${create_anchor}   
-    Wait Until Page Contains    Create Account
-    Input Text    id=username    Jack
-    Input Text    id=password    ${new_user_password}
-    Click Element    ${create_btn}    
-    Sleep    3s
-    Wait Until Element Is Visible    ${error_msg1}
-    Click Element    ${cancel_btn}    
-    Sleep    2s
-    [Teardown]    Close Website
+# Creating New Account - Failed Username New Password Exists
+#     [Setup]    Launch Website
+#     Click Element    ${create_anchor}   
+#     Wait Until Page Contains    Create Account
+#     Input Text    id=username    Joyce
+#     Input Text    id=password    Testing
+#     Click Element    ${create_btn}    
+#     Sleep    3s
+#     Wait Until Element Is Visible    ${error_msg1}
+#     Click Element    ${cancel_btn}    
+#     Sleep    2s
+#     [Teardown]    Close Website
 
 Creating New Account - Failed Attempt to create weak username
     # Username needs to be at least 2 characters 

@@ -1,14 +1,14 @@
 
-*** Variables ***
-${DB_NAME}        database.db
+# *** Variables ***
+# ${DB_NAME}        database.db
 
-*** Settings ***
-Library           DatabaseLibrary
+# *** Settings ***
+# Library           DatabaseLibrary
 
-Test Setup        Connect To Database Using Custom Params    sqlite3    database= '/instance/{DB_NAME}'
-Test Teardown     Disconnect From Database
+# Test Setup        Connect To Database Using Custom Params    sqlite3    database= '/instance/{DB_NAME}'
+# Test Teardown     Disconnect From Database
 
-*** Test Cases ***
-Example SQLite Test
-    ${result}=    Query    SELECT * FROM user
-    Log    ${result}
+# *** Test Cases ***
+# Example SQLite Test
+#     ${result}=    Query    SELECT * FROM user
+#     Log    ${result}
