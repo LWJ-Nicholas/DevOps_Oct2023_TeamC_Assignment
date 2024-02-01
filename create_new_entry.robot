@@ -9,19 +9,24 @@ ${login_user_password}      1234567
 # ${login_anchor}    xpath=//a[contains(text(),'Login')]
 ${save_btn}    xpath=//a[contains(text(),'Save')]
 ${cancel_btn}    xpath=//a[contains(text(),'Cancel')]
-${success_msg}    css=.alert.alert-success    #xpath=//div[contains(@class, 'alert-success') and contains(normalize-space(text()), 'Account created!')] 
+${success_msg}    css=.alert.alert-success     
 ${error_msg}    css=.alert.alert-danger
 
-*** Test Cases ***
-Launching website
-    
-    # Go to website and check went to correct website (pre-requisite)
-    [Setup]    Open Browser    ${website_url}    headlesschrome
+*** Keywords ***
+Launch Website
+    Open Browser    ${website_url}    headlesschrome
     Title Should Be    Query    
-    #Click Element    id=login   
-    Sleep    2s
+    #Click Element    ${login_anchor}
+    Sleep    2s   
 
-Create New Capstone Entry - Success 
+Close Website
+    Close Browser
+
+*** Test Cases ***
+# Number of test cases: 1
+
+Create New Capstone Entry (Checking if can input values into fields)
+    [Setup]    Launch Website
     #Click Element    xpath=//a[contains(text(),' Create ')]
     Input Text    id=name    Devops
     Input Text    id=title    Final Assignment
@@ -35,7 +40,6 @@ Create New Capstone Entry - Success
     #Wait Until Element Is Visible    ${success_msg}
     Sleep    5s
     Click Element    ${cancel_btn}
+    [Teardown]    Close Website
 
-Close Website
-    Close Browser
-    [Teardown]    Close Browser
+    
