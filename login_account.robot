@@ -36,6 +36,7 @@ Entering Login Details User - Success
     Sleep     3s
     Wait Until Element Is Visible    ${success_msg}        
     Wait Until Page Contains    ${login_user_username}
+    Sleep     2s
     Click Element    ${logout_btn}    
     Click Element    ${login_anchor}
     [Teardown]    Close Website
@@ -66,6 +67,7 @@ Entering Login Details - Fail Wrong Password
     Input Text    id=username    ${login_user_username}    
     Input Text    id=password   123456789
     Click Element     ${login_btn}    
+    Sleep     2s
     Wait Until Element Is Visible    ${error_msg2}        
     Sleep     3s
     [Teardown]    Close Website
