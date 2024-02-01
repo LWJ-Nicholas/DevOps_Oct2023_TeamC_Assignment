@@ -29,16 +29,15 @@ Close Website
 # Number of test cases: 7
 
 Entering Login Details User - Success
-    [Setup]    Launch Website  
+    [Setup]    Launch Website    
     Input Text    id=username    ${login_user_username}
     Input Text    id=password    ${login_user_password}
     Click Element    ${login_btn}    
     Sleep     3s
     Wait Until Element Is Visible    ${success_msg}        
-    Wait Until Page Contains    ${login_user_username}
-    Sleep     2s
+    Wait Until Page Contains    ${login_user_username}    
     Click Element    ${logout_btn}    
-    Click Element    ${login_anchor}
+    Click Element    ${login_anchor}   
     [Teardown]    Close Website
 
 Entering Login Details Administrator - Success
@@ -64,7 +63,7 @@ Entering Login Details - Fail Wrong Username
 
 Entering Login Details - Fail Wrong Password
     [Setup]    Launch Website
-    Input Text    id=username    ${login_user_username}    
+    Input Text    id=username   ${login_user_username}    
     Input Text    id=password   123456789
     Click Element     ${login_btn}    
     Sleep     2s
