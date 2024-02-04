@@ -36,17 +36,18 @@ def test_non_existing_username_in_db():
         users_with_username = User.query.filter_by(username=non_existing_username).all()
         assert len(users_with_username) == 0
 
-def test_non_existing_password_in_db():
+def test_incorrect_password_in_db():
     with app.app_context():
-        non_existing_password = 'nonexistentpassword'
-        users_with_password = User.query.filter_by(password=non_existing_password).all()
-        assert len(users_with_password) == 0
+        username='Testing'
+        incorrect_password = 'thisisanincorrectpassword'
+        users_with_password = User.query.filter_by(username=username).all()
+        assert check_password_hash(users_with_password[0].password, incorrect_password) == False
 
 
 # Check for values existing in database
 def test_existing_username():
     with app.app_context():
-        existing_username = 'Hi'  
+        existing_username = 'Testing'  
         existing_user = User.query.filter_by(username=existing_username).first()
         assert existing_user
        
@@ -62,14 +63,14 @@ def test_retrieve_password_by_username():
     with app.app_context():
         existing_username = 'Testing'  
         user = User.query.filter_by(username=existing_username).first()
-        retrieved_password = user.password if user else None
+        retrieved_password = user.password
         assert retrieved_password
 
 def test_retrieve_username_and_password_by_id():
     with app.app_context():
         existing_user_id = 3
         user = User.query.get(existing_user_id)
-        retrieved_username = user.username if user else None
-        retrieved_password = user.password if user else None
+        retrieved_username = user.username
+        retrieved_password = user.password
         assert retrieved_username and retrieved_password
 
