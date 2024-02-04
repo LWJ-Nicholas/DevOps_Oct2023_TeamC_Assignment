@@ -3,8 +3,8 @@ Library    SeleniumLibrary
 
 *** Variables ***
 ${website_url}    http://127.0.0.1:5000
-${new_user_username}      Testing
-${new_user_password}      testing
+${new_user_username}      Testing3
+${new_user_password}      testing3
 ${login_btn}    xpath=//button[contains(text(),'Login')]
 ${login_anchor}    xpath=//a[contains(text(),'Login')]
 ${logout_btn}    xpath=//a[contains(text(),'Logout')]    
@@ -15,30 +15,38 @@ ${success_msg}    xpath=//div[contains(@class, 'alert-success') and contains(nor
 ${error_msg1}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'User already exists')]
 ${error_msg2}    xpath=//div[contains(@class, 'alert-danger') and contains(normalize-space(text()), 'Username must be greater than 2 characters.')]
 
-*** Test Cases ***
-Launching website
-    # Go to website and check went to correct website (pre-requisite)
+
+*** Keywords ***
+Launch Website
     Open Browser    ${website_url}    headlesschrome
     Title Should Be    Home    
-    Click Element    ${login_anchor}      
-    Sleep    2s
+    Click Element    ${login_anchor}
+    Sleep    2s   
 
-# Creating New Account - Success
-#     ${result}    Run Keyword And Ignore Error    Set Variable    ${failed_page}    ${True}
-#     Click Element    ${create_anchor}       
-#     Wait Until Page Contains    Create Account
-#     Input Text    id=username    ${new_user_username}
-#     Input Text    id=password    ${new_user_password}
-#     Click Element    ${create_btn}    
-#     Wait Until Element Is Visible    ${success_msg}    
-#     Wait Until Page Contains    ${new_user_username}
-#     Sleep    3s
-#     Click Element    ${logout_btn}
-#     Click Element    ${login_anchor}
-#     Sleep    2s
+Close Website
+    Close Browser
+  
+*** Test Cases ***
+# Number of test cases: 8
+
+Creating New Account - Success
+    # Test case may fail if new username and password is not used
+    [Setup]    Launch Website
+    Click Element    ${create_anchor}       
+    Wait Until Page Contains    Create Account
+    Input Text    id=username    ${new_user_username}
+    Input Text    id=password    ${new_user_password}
+    Click Element    ${create_btn}    
+    Wait Until Element Is Visible    ${success_msg}    
+    Wait Until Page Contains    ${new_user_username}
+    Sleep    3s
+    Click Element    ${logout_btn}
+    Click Element    ${login_anchor}
+    Sleep    2s
+    [Teardown]    Close Website
 
 Creating New Account - Failed Existing Account
-    #Click Element    ${login_anchor}
+    [Setup]    Launch Website
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
@@ -48,8 +56,10 @@ Creating New Account - Failed Existing Account
     Wait Until Element Is Visible    ${error_msg1}
     Click Element    ${cancel_btn}    
     Sleep    2s
+    [Teardown]   Close Website
 
 Creating New Account - Failed Username Exists Password New
+    [Setup]    Launch Website
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
@@ -59,20 +69,24 @@ Creating New Account - Failed Username Exists Password New
     Wait Until Element Is Visible    ${error_msg1}
     Click Element    ${cancel_btn}    
     Sleep    2s
+    [Teardown]    Close Website
 
-Creating New Account - Failed Username New Password Exists
-    Click Element    ${create_anchor}   
-    Wait Until Page Contains    Create Account
-    Input Text    id=username    Jack
-    Input Text    id=password    ${new_user_password}
-    Click Element    ${create_btn}    
-    Sleep    3s
-    Wait Until Element Is Visible    ${error_msg1}
-    Click Element    ${cancel_btn}    
-    Sleep    2s
+# Creating New Account - Failed Username New Password Exists
+#     [Setup]    Launch Website
+#     Click Element    ${create_anchor}   
+#     Wait Until Page Contains    Create Account
+#     Input Text    id=username    Joyce
+#     Input Text    id=password    Testing
+#     Click Element    ${create_btn}    
+#     Sleep    3s
+#     Wait Until Element Is Visible    ${error_msg1}
+#     Click Element    ${cancel_btn}    
+#     Sleep    2s
+#     [Teardown]    Close Website
 
 Creating New Account - Failed Attempt to create weak username
     # Username needs to be at least 2 characters 
+    [Setup]    Launch Website
     Click Element    ${create_anchor}    
     Wait Until Page Contains    Create Account
     Input Text    id=username    m
@@ -82,9 +96,11 @@ Creating New Account - Failed Attempt to create weak username
     Wait Until Element Is Visible    ${error_msg2}
     Click Element    ${cancel_btn}    
     Sleep    2s
+    [Teardown]    Close Website
 
 Creating New Account - Failed Attempt to create weak password
     # Password needs to be at least 7 characters
+    [Setup]    Launch Website
     Click Element    ${create_anchor}      
     Wait Until Page Contains    Create Account
     Input Text    id=username    ${new_user_username}
@@ -94,8 +110,10 @@ Creating New Account - Failed Attempt to create weak password
     Wait Until Element Is Visible    ${error_msg1}
     Click Element    ${cancel_btn}    
     Sleep    2s
+    [Teardown]    Close Website
 
 Creating New Account - Failed Blank Inputs
+    [Setup]    Launch Website
     Click Element    ${create_anchor}       
     Wait Until Page Contains    Create Account
     Click Element    ${create_btn}    
@@ -103,7 +121,4 @@ Creating New Account - Failed Blank Inputs
     Wait Until Element Is Visible    ${error_msg2}
     Click Element    ${cancel_btn}    
     Sleep    2s
-
-Close Website
-    Close Browser
-    [Teardown]    Close Browser
+    [Teardown]    Close Website

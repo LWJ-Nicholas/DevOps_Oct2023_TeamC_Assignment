@@ -1,4 +1,5 @@
 # content of test_sysexit.py
+import unittest
 from website.models import User
 from website import db
 from main import app
