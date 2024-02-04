@@ -6,8 +6,8 @@ Library    SeleniumLibrary
 ${website_url}    http://127.0.0.1:5000
 ${login_admin_username}    Admin      
 ${login_admin_password}    password
-${login_user_username}    Testing9
-${login_user_password}    Testing9
+${login_user_username}    test8
+${login_user_password}    test8
 ${login_btn}    xpath=//button[contains(text(),'Login')]
 ${login_anchor}    xpath=//a[contains(text(),'Login')]
 ${logout_btn}    xpath=//a[contains(text(),'Logout')]   
