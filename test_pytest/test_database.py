@@ -32,37 +32,38 @@ def test_database_duplicate_usernames():
 # Check for not existing in database
 def test_non_existing_username_in_db():
     with app.app_context():
-        non_existing_username = 'nonexistentuser'
-        users_with_username = User.query.filter_by(username=non_existing_username).all()
+        non_existing_username = 'thisisanonexistentuser'
+        users_with_username = User.query.filter_by(username=non_existing_username)
         assert len(users_with_username) == 0
 
 def test_incorrect_password_in_db():
     with app.app_context():
         username='Testing'
         incorrect_password = 'thisisanincorrectpassword'
-        users_with_password = User.query.filter_by(username=username).all()
-        assert check_password_hash(users_with_password[0].password, incorrect_password) == False
+        users_with_password = User.query.filter_by(username=username)
+        assert check_password_hash(users_with_password.password, incorrect_password) == False
 
 
 # Check for values existing in database
 def test_existing_username():
     with app.app_context():
         existing_username = 'Testing'  
-        existing_user = User.query.filter_by(username=existing_username).first()
+        existing_user = User.query.filter_by(username=existing_username)
         assert existing_user
        
-def test_existing_password():
+def test_correct_password():
     with app.app_context():
-        existing_password = 'testing'
-        users_with_password = User.query.all()
-        password_matched = any(check_password_hash(user.password, existing_password) for user in users_with_password)
+        username='Testing'
+        correct_password = 'testing'
+        user = User.query.filter_by(username=username)
+        password_matched = check_password_hash(user.password, correct_password)
         assert password_matched
 
 # Retrieve values based on column value in database
 def test_retrieve_password_by_username():
     with app.app_context():
         existing_username = 'Testing'  
-        user = User.query.filter_by(username=existing_username).first()
+        user = User.query.filter_by(username=existing_username)
         retrieved_password = user.password
         assert retrieved_password
 
