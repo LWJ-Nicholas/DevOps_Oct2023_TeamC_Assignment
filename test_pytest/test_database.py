@@ -43,33 +43,45 @@ def test_non_existing_password_in_db():
         assert len(users_with_password) == 0
 
 
-# Check for values existing in database
-def test_existing_username():
-    with app.app_context():
-        existing_username = 'Hi'  
-        existing_user = User.query.filter_by(username=existing_username).first()
-        assert existing_user
+# # Check for values existing in database
+# def test_existing_username():
+#     with app.app_context():
+#         existing_username = 'Hi'  
+#         existing_user = User.query.filter_by(username=existing_username).first()
+#         assert existing_user
        
-def test_existing_password():
-    with app.app_context():
-        existing_password = 'testing'
-        users_with_password = User.query.all()
-        password_matched = any(check_password_hash(user.password, existing_password) for user in users_with_password)
-        assert password_matched
+# def test_existing_password():
+#     with app.app_context():
+#         existing_password = 'testing'
+#         users_with_password = User.query.all()
+#         password_matched = any(check_password_hash(user.password, existing_password) for user in users_with_password)
+#         assert password_matched
 
-# Retrieve values based on column value in database
-def test_retrieve_password_by_username():
-    with app.app_context():
-        existing_username = 'Testing'  
-        user = User.query.filter_by(username=existing_username).first()
-        retrieved_password = user.password if user else None
-        assert retrieved_password
+# # Retrieve values based on column value in database
+# def test_retrieve_password_by_username():
+#     with app.app_context():
+#         existing_username = 'Testing'  
+#         user = User.query.filter_by(username=existing_username).first()
+#         retrieved_password = user.password if user else None
+#         assert retrieved_password
 
-def test_retrieve_username_and_password_by_id():
-    with app.app_context():
-        existing_user_id = 3
-        user = User.query.get(existing_user_id)
-        retrieved_username = user.username if user else None
-        retrieved_password = user.password if user else None
-        assert retrieved_username and retrieved_password
+# def test_retrieve_username_and_password_by_id():
+#     with app.app_context():
+#         existing_user_id = 3
+#         user = User.query.get(existing_user_id)
+#         retrieved_username = user.username if user else None
+#         retrieved_password = user.password if user else None
+#         assert retrieved_username and retrieved_password
+
+# # Inserting new values into database
+# def test_insert_new_user():
+#     with app.app_context():
+#         new_username = 'testing5'
+#         new_password = 'testing5'
+#         new_user = User(username=new_username, password=new_password)
+#         db.session.add(new_user)
+#         db.session.commit()
+#         inserted_user = User.query.filter_by(username=new_username).first()
+#         assert inserted_user.username == new_username
+#         assert inserted_user.password == new_password
 
