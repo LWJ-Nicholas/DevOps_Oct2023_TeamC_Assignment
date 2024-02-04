@@ -15,7 +15,11 @@ ${error_msg}    css=.alert.alert-danger
 *** Keywords ***
 Launch Website
     Open Browser    ${website_url}    headlesschrome
+<<<<<<< HEAD
     Title Should Be    Create 
+=======
+    Title Should Be    Query    
+>>>>>>> e06d70d456188c80f4d0966c13d9df966e027158
     #Click Element    ${login_anchor}
     Sleep    2s   
 
