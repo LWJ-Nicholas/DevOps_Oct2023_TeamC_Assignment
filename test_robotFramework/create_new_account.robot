@@ -71,19 +71,6 @@ Creating New Account - Failed Username Exists Password New
     Sleep    2s
     [Teardown]    Close Website
 
-# Creating New Account - Failed Username New Password Exists
-#     [Setup]    Launch Website
-#     Click Element    ${create_anchor}   
-#     Wait Until Page Contains    Create Account
-#     Input Text    id=username    Joyce
-#     Input Text    id=password    Testing
-#     Click Element    ${create_btn}    
-#     Sleep    3s
-#     Wait Until Element Is Visible    ${error_msg1}
-#     Click Element    ${cancel_btn}    
-#     Sleep    2s
-#     [Teardown]    Close Website
-
 Creating New Account - Failed Attempt to create weak username
     # Username needs to be at least 2 characters 
     [Setup]    Launch Website
@@ -122,3 +109,4 @@ Creating New Account - Failed Blank Inputs
     Click Element    ${cancel_btn}    
     Sleep    2s
     [Teardown]    Close Website
+
