@@ -122,4 +122,3 @@ Creating New Account - Failed Blank Inputs
     Click Element    ${cancel_btn}    
     Sleep    2s
     [Teardown]    Close Website
-#     Close Browser
