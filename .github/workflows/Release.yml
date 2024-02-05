@@ -47,14 +47,46 @@ jobs:
     
     - name: move files
       run: mv *.xml ./downloads
+
+    - name: Remove test files
+      run: find . -type f -name 'test_*' -delete
+    
+    - name: Checkout Testing Repo
+      uses: actions/checkout@v2
+      with:
+        repository: LWJ-Nicholas/DevOps_ASG_Integration_Tests
+        path: IntegrationTests
+
+    - name: Run Integration tests
+      env:
+        SELENIUM_BROWSER: headlesschrome
+      run: |
+        robot .
+
+    - name: Create Issue on Failed workflow
+      if: ${{ failure() }}
+      id: create_issue
+      uses: dacbd/create-issue-action@main
+      with:
+        token: ${{ github.token }}
+        title: Action workflow failed.
+        body: |
+          ### Context
+          [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+          Workflow name - `${{ github.workflow }}`
+          Job -           `${{ github.job }}`
+          status -        `${{ job.status }}`
+          assignees: LWJ-Nicholas
+
+    - name: Remove test files
+      run: find . -type f -name 'test_*' -delete
       
     - name: Upload document
       uses: actions/upload-artifact@v2
       with: 
         name: assetDocuments
-        paths: |
-          - "downloads"
-          - "!downloads/test_*"
+        path: downloads
 
     - name: Set environment version
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
