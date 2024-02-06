@@ -33,6 +33,12 @@ jobs:
       run: |
         python -m pytest --junitxml=test.xml
 
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
+
     - name: Setup ChromeDriver
       uses: nanasess/setup-chromedriver@master
 
@@ -56,9 +62,22 @@ jobs:
           Workflow name - `${{ github.workflow }}`
           Job -           `${{ github.job }}`
           status -        `${{ job.status }}`
-          assignees: LWJ-Nicholas
+          assignees: @LWJ-Nicholas, @HanisaMusrin, @Harshini53
 
-    - name: Request approval
+    - name: Request Approval
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: HanisahMusrin,Harshini53,LWJ-Nicholas
+        minimum-approvals: 1
+        issue-title: "Deploying v1.3.5 to prod from staging"
+        issue-body: "Please approve or deny the deployment of version v1.3.5."
+        exclude-workflow-initiator-as-approver: true
+        additional-approved-words: ''
+        additional-denied-words: ''
+
+
+    - name: Comment
       if: ${{ success() }}
       uses: actions/github-script@v5
       with:
@@ -70,22 +89,3 @@ jobs:
             body: '@HanisahMusrin can you please approve this pull request?'
           };
           github.rest.issues.createComment(prComment);
-
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2
-      if: always()
-      with:
-        junit_files: "report.xml"
-
-    - name: Auto Merge pull request
-      uses: pascalgn/automerge-action@v0.14.3
-      with:
-        MERGE_LABELS: "automerge,!wip"
-        MERGE_METHOD: "merge"
-        MERGE_COMMIT_MESSAGE: "automatic"
-        MERGE_FORKS: "false"
-        UPDATE_LABELS: ""
-        MERGE_RETRIES: "6"
-        MERGE_RETRY_SLEEP: "10000"
-        MERGE_DELETE_BRANCH: "false"
-        GITHUB_TOKEN: "${{ secrets.MY_GITHUB_TOKEN }}"
