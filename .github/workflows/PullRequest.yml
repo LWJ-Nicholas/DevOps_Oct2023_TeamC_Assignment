@@ -76,7 +76,6 @@ jobs:
         exclude-workflow-initiator-as-approver: false
         additional-approved-words: ''
         additional-denied-words: ''
-        assignees: HanisahMusrin
 
 
     - name: Comment
