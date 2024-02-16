@@ -32,7 +32,7 @@ def logout():
     flash('Logged out successfully!',category='success')
     return redirect('/')
 
-@auth.route('/create-account',methods=['GET','POST'])
+@auth.route('/register',methods=['GET','POST'])
 def createAccount():
     if request.method == "POST":
         username = request.form.get('username')
@@ -48,7 +48,7 @@ def createAccount():
             flash('Password must be greater than 7 characters.',category='error')
         else:
             new_user = User(username=username, password=generate_password_hash(
-                password, method='pbkdf2'))
+                password, method='pbkdf2'),role='user')
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
@@ -57,7 +57,7 @@ def createAccount():
 
             return redirect(url_for('auth.welcome'))
 
-    return render_template("create-account.html",user=current_user)
+    return render_template("register.html",user=current_user)
 
 @auth.route('/welcome')
 @login_required
@@ -80,4 +80,10 @@ def form():
         # Return a response (you can redirect or render a template)
         return render_template('success.html', name=name)  # Render a success page with the submitted name
 
-    return render_template('CreateEntry.html')
+    return render_template('create-entry.html')
+
+@auth.route('/manage_account')
+@login_required
+def manage_account():
+    userArray = User.query.all()
+    return render_template("manage_account.html",user=current_user,array=userArray)

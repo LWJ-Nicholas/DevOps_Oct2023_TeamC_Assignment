@@ -8,44 +8,93 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v4
       with:
         python-version: 3.11
-    - name: Install Libraries
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Checkout Own Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: LWJ-Nicholas/DevOps_Oct2023_TeamC_Assignment
-    - name: list our contents
+
+    - name: Install Library Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
+
+    - name: list the contents
       run: |
         ls
+
+    - name: Start Flask server
+      run: |
+        python main.py &
+          
     - name: test with pytest
       run: |
-        pytest test.py -v -cov --junitxml=report.xml
-    - if: ${{ failure() }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        filename: .github/ISSUE_TEMPLATE.md
-  
+        python -m pytest --junitxml=test.xml
+
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
       with:
         junit_files: "report.xml"
-    - name: create folder
-      run: mkdir downloads
-    
-    - name: move files
-      run: mv *.xml ./downloads
-      
-    - name: Upload document
-      uses: actions/upload-artifact@v2
-      with: 
-        name: assetDocuments
-        path: downloads
-    
+
+    - name: Setup ChromeDriver
+      uses: nanasess/setup-chromedriver@master
+
+    - name: Run Robot Framework tests
+      env:
+        SELENIUM_BROWSER: headlesschrome
+      run: |
+        robot .
+
+    - name: Create Issue on Failed workflow
+      if: ${{ failure() }}
+      id: create_issue
+      uses: dacbd/create-issue-action@main
+      with:
+        token: ${{ github.token }}
+        title: Action workflow failed.
+        body: |
+          ### Context
+          [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+          Workflow name - `${{ github.workflow }}`
+          Job -           `${{ github.job }}`
+          status -        `${{ job.status }}`
+          assignees: @LWJ-Nicholas, @HanisaMusrin, @Harshini53
+
+    - name: Request Approval
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: HanisahMusrin,Harshini53,LWJ-Nicholas
+        minimum-approvals: 1
+        issue-title: "Deploying v1.3.5 to prod from staging"
+        issue-body: "Please approve or deny the deployment of version v1.3.5."
+        exclude-workflow-initiator-as-approver: true
+        additional-approved-words: ''
+        additional-denied-words: ''
+        assignees: @HanisahMusrin
+
+
+    - name: Comment
+      if: ${{ success() }}
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const prComment = {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: '@HanisahMusrin can you please approve this pull request?'
+          };
+
+          github.rest.issues.createComment(prComment);
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
