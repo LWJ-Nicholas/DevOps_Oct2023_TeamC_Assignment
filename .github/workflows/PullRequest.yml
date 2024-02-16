@@ -38,7 +38,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
       with:
-        junit_files: "report.xml"
+        junit_files: "test.xml"
 
     - name: Setup ChromeDriver
       uses: nanasess/setup-chromedriver@master
@@ -73,10 +73,10 @@ jobs:
         minimum-approvals: 1
         issue-title: "Deploying v1.3.5 to prod from staging"
         issue-body: "Please approve or deny the deployment of version v1.3.5."
-        exclude-workflow-initiator-as-approver: true
+        exclude-workflow-initiator-as-approver: false
         additional-approved-words: ''
         additional-denied-words: ''
-        assignees: @HanisahMusrin
+        assignees: HanisahMusrin
 
 
     - name: Comment
@@ -92,9 +92,3 @@ jobs:
           };
 
           github.rest.issues.createComment(prComment);
-
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2
-      if: always()
-      with:
-        junit_files: "report.xml"
