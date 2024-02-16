@@ -6,7 +6,7 @@ ${website_url}    http://127.0.0.1:5000/login
 ${login_admin_username}    Admin      
 ${login_admin_password}    password
 ${login_btn}    xpath=//button[contains(text(),'Login')]
-${modify_accounts_btn}    xpath=//a[contains(text(),' Modify Accounts ')]
+${modify_accounts_btn}    xpath=//a[contains(text(),' Change Accounts ')]
 ${return_btn}    xpath=//a[contains(text(),' Return ')]
 ${logout_btn}    xpath=//a[contains(text(),'Logout')]   
 ${success_msg}    css=.alert.alert-success     

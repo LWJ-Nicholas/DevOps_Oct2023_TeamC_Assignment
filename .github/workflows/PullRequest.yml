@@ -34,6 +34,12 @@ jobs:
       run: |
         python -m pytest --junitxml=test.xml
 
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
+
     - name: Setup ChromeDriver
       uses: nanasess/setup-chromedriver@master
 
@@ -57,9 +63,23 @@ jobs:
           Workflow name - `${{ github.workflow }}`
           Job -           `${{ github.job }}`
           status -        `${{ job.status }}`
-          assignees: @HanisahMusrin
+          assignees: @LWJ-Nicholas, @HanisaMusrin, @Harshini53
 
-    - name: Request approval
+    - name: Request Approval
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: HanisahMusrin,Harshini53,LWJ-Nicholas
+        minimum-approvals: 1
+        issue-title: "Deploying v1.3.5 to prod from staging"
+        issue-body: "Please approve or deny the deployment of version v1.3.5."
+        exclude-workflow-initiator-as-approver: true
+        additional-approved-words: ''
+        additional-denied-words: ''
+        assignees: @HanisahMusrin
+
+
+    - name: Comment
       if: ${{ success() }}
       uses: actions/github-script@v5
       with:
@@ -70,6 +90,7 @@ jobs:
             issue_number: context.issue.number,
             body: '@HanisahMusrin can you please approve this pull request?'
           };
+
           github.rest.issues.createComment(prComment);
 
     - name: Publish Test Results
